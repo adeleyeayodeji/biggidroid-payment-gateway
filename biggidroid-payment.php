@@ -29,6 +29,8 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 } else {
     //add action plugins loaded
     add_action('plugins_loaded', 'biggidroid_payment_init');
+    //add settings url
+    add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'biggidroid_payment_settings_link');
 }
 
 
@@ -49,4 +51,12 @@ function biggidroid_payment_woocommerce_notice()
     require_once BIGGI_DROID_PAYMENT_PLUGIN_PATH . '/templates/admin_notice.php';
     $html = ob_get_clean();
     echo $html;
+}
+
+//biggidroid_payment_settings_link
+function biggidroid_payment_settings_link($links)
+{
+    $settings_link = '<a href="admin.php?page=wc-settings&tab=checkout&section=biggidroid_payment">Settings</a>';
+    array_push($links, $settings_link);
+    return $links;
 }
