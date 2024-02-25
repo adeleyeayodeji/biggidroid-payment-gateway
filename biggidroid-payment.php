@@ -21,6 +21,7 @@ if (!defined('ABSPATH')) {
 define('BIGGI_DROID_PAYMENT_VERSION', '0.1.0');
 define('BIGGI_DROID_PAYMENT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('BIGGI_DROID_PAYMENT_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('BIGGIDROID_TEXT_DOMAIN', 'biggidroid-payment');
 
 //check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -31,6 +32,8 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
     add_action('plugins_loaded', 'biggidroid_payment_init');
     //add settings url
     add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'biggidroid_payment_settings_link');
+    //register woocommerce payment gateway
+    add_filter('woocommerce_payment_gateways', 'biggidroid_payment_gateway');
 }
 
 
@@ -59,4 +62,11 @@ function biggidroid_payment_settings_link($links)
     $settings_link = '<a href="admin.php?page=wc-settings&tab=checkout&section=biggidroid_payment">Settings</a>';
     array_push($links, $settings_link);
     return $links;
+}
+
+//biggidroid_payment_gateway
+function biggidroid_payment_gateway($gateways)
+{
+    $gateways[] = 'Biggi_Droid_Payment_Gateway';
+    return $gateways;
 }
