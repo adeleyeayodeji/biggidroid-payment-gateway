@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 //define the plugin constants
-define('BIGGI_DROID_PAYMENT_VERSION', '0.1.0');
+define('BIGGI_DROID_PAYMENT_VERSION', time());
 define('BIGGI_DROID_PAYMENT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('BIGGI_DROID_PAYMENT_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('BIGGIDROID_TEXT_DOMAIN', 'biggidroid-payment');
