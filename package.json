@@ -1,0 +1,27 @@
+{
+  "name": "biggidroid-payment",
+  "version": "0.1.0",
+  "description": "Payment Gateway for Monnify on WooCommerce allows you to accept online payments from local and international customers",
+  "author": "Adeleye Ayodeji",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build": "wp-scripts build src/block.js --output-path=assets/js/block",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "start": "wp-scripts start src/block.js --output-path=assets/js/block --watch"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^26.13.0"
+  },
+  "dependencies": {
+    "@wordpress/element": "^5.19.0",
+    "react": "^18.2.0"
+  }
+}

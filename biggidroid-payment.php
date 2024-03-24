@@ -22,6 +22,8 @@ define('BIGGI_DROID_PAYMENT_VERSION', time());
 define('BIGGI_DROID_PAYMENT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('BIGGI_DROID_PAYMENT_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('BIGGIDROID_TEXT_DOMAIN', 'biggidroid-payment');
+//biggidroid file
+define('BIGGI_DROID_PAYMENT_FILE', __FILE__);
 
 //check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -34,6 +36,29 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
     add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'biggidroid_payment_settings_link');
     //register woocommerce payment gateway
     add_filter('woocommerce_payment_gateways', 'biggidroid_payment_gateway');
+    //woocommerce_blocks_loaded
+    add_action('woocommerce_blocks_loaded', 'biggidroid_payment_block_support');
+}
+
+/**
+ * biggidroid_payment_block_support
+ * 
+ */
+function biggidroid_payment_block_support()
+{
+    //check for AbstractPaymentMethodType class
+    if (class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
+        //include the BiggiDroidBlockPaymentMethod class
+        include_once BIGGI_DROID_PAYMENT_PLUGIN_PATH . '/includes/class-biggidroid-block-payment-method.php';
+
+        // registering our block support class
+        add_action(
+            'woocommerce_blocks_payment_method_type_registration',
+            function (Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry) {
+                $payment_method_registry->register(new WC_BiggiDroid_Payment_Gateway_Block_Support);
+            }
+        );
+    }
 }
 
 

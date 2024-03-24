@@ -68,6 +68,12 @@ class Biggi_Droid_Payment_Gateway extends WC_Payment_Gateway_CC
      */
     public $live_secret_key;
 
+    /**
+     * saved_cards
+     * 
+     */
+    public $saved_cards;
+
 
     /**
      * Constructor
@@ -107,6 +113,9 @@ class Biggi_Droid_Payment_Gateway extends WC_Payment_Gateway_CC
         $this->description = $this->get_option('description');
         $this->enabled = $this->get_option('enabled');
 
+        //saved_cards
+        $this->saved_cards = false;
+
         $this->test_mode = 'yes' === $this->get_option('test_mode') ? true : false;
 
         $this->test_public_key = $this->get_option('test_public_key');
@@ -124,6 +133,15 @@ class Biggi_Droid_Payment_Gateway extends WC_Payment_Gateway_CC
         add_action('admin_enqueue_scripts', [$this, 'admin_scripts']);
         //woocommerce available payment gateways
         add_action('woocommerce_available_payment_gateways', [$this, 'available_payment_gateways']);
+    }
+
+    /**
+     * Get Paystack payment icon URL.
+     */
+    public function get_logo_url()
+    {
+        $url = WC_HTTPS::force_https_url(BIGGI_DROID_PAYMENT_PLUGIN_URL . '/assets/images/biggidroid_payment.png');
+        return apply_filters('woocommerce_biggidroid_payment_icon', $url, $this->id);
     }
 
     /**
